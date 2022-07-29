@@ -54,6 +54,33 @@ async fn respond(req: Request<Body>, db: Value) -> Result<Response<Body>, hyper:
 			Ok(Response::new(Body::from(users[&user].to_string())))
 		}
 
+		(&Method::GET, "sort") => {
+			if bits.len() != 3 {
+				return Ok(not_found(format!("expected 2 args (got {})", bits.len() - 1)));
+			}
+
+			let field = String::from(bits[2]);
+			println!("Requesting sorted list of users by '{}'", field);
+
+			// XXX this is a very temporary solution
+			let users: HashMap<String, Value> = serde_json::from_str(&db["users"].to_string()).unwrap();
+
+			let mut user_list: Vec<_> = users.iter().collect();
+
+			user_list.sort_by(|a, b| a.1[&field].as_u64().unwrap().partial_cmp(&(b.1[&field].as_u64().unwrap())).unwrap());
+			user_list.reverse();
+
+			let mut response: Array = json!([]);
+
+			for user in user_list {
+				println!("{:?}", user);
+			}
+
+			// println!("{:?}", user_list);
+
+			Ok(Response::new(Body::from(response.to_string())))
+		}
+
 		_ => {
 			Ok(not_found(format!("unknown API endpoint: {}", bits[1])))
 		}

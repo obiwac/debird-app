@@ -1,5 +1,5 @@
 #!/bin/sh
 set -xe
 
-cd server
+cd server_rs
 cargo run
