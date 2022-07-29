@@ -1,0 +1,6 @@
+server/debug
+server/target
+
+**/Cargo.lock
+
+**/*.rs.bk
