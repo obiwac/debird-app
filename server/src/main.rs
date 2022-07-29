@@ -37,11 +37,14 @@ async fn respond(req: Request<Body>, db: Value) -> Result<Response<Body>, hyper:
 		}
 
 		(&Method::GET, "user_info") => {
+			if bits.len() != 3 {
+				return Ok(not_found(format!("expected 2 args (got {})", bits.len() - 1)));
+			}
+
 			let user = String::from(bits[2]);
 			println!("Requesting information about user '{}'", user);
 
 			// XXX this is a very temporary solution
-
 			let users: HashMap<String, Value> = serde_json::from_str(&db["users"].to_string()).unwrap();
 
 			if ! users.contains_key(&user) {
