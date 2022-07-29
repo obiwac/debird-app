@@ -1,0 +1,17 @@
+task:
+  timeout_in: 5m
+  container: rust:latest
+
+  registry_cache:
+    folder: $CARGO_HOME/registry
+    fingerprint_script:
+      - cat server/Cargo.lock
+  target_cache:
+    folder: target
+    fingerprint_script:
+      - rustc --version
+      - cat server/Cargo.lock
+  build_script:
+    - sh scripts/build-server.sh
+  before_cache_script:
+    - rm -rf $CARGO_HOME/registry/index
