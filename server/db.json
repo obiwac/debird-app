@@ -1,10 +1,13 @@
 {
-	"users": [
-		{
-			"name": "alice"
+	"users": {
+		"alice": {
+			"klapgijp": 3
 		},
-		{
-			"name": "bob"
+		"bob": {
+			"klapgijp": 5
+		},
+		"eve": {
+			"klapgijp": 2
 		}
-	]
+	}
 }
