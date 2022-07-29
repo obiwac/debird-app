@@ -1,5 +1,5 @@
 #!/bin/sh
 set -xe
 
-cd server_rs
+cd server
 cargo build

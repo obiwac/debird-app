@@ -4,12 +4,12 @@ task:
   registry_cache:
     folder: $CARGO_HOME/registry
     fingerprint_script:
-      - cat server_rs/Cargo.lock
+      - cat server/Cargo.lock
   target_cache:
     folder: target
     fingerprint_script:
       - rustc --version
-      - cat server_rs/Cargo.lock
+      - cat server/Cargo.lock
   build_script:
     - sh scripts/build-server.sh
   before_cache_script:
