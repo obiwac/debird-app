@@ -1,13 +1,43 @@
 {
 	"users": {
 		"alice": {
-			"klapgijp": 3
+			"name": "Alice",
+			"events": [
+				{
+					"type": "klapgijp",
+					"time": "1659115265"
+				}
+			]
 		},
 		"bob": {
-			"klapgijp": 5
+			"name": "Bob",
+			"events": [
+				{
+					"type": "klapgijp",
+					"time": "1659115265"
+				},
+				{
+					"type": "klapgijp",
+					"time": "1659115265"
+				}
+			]
 		},
 		"eve": {
-			"klapgijp": 2
+			"name": "Eve",
+			"events": [
+				{
+					"type": "klapgijp",
+					"time": "1659115265"
+				},
+				{
+					"type": "klapgijp",
+					"time": "1659115265"
+				},
+				{
+					"type": "klapgijp",
+					"time": "1659115265"
+				}
+			]
 		}
 	}
 }

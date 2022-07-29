@@ -26,9 +26,13 @@ async fn respond(req: Request<Body>, db: Value) -> Result<Response<Body>, hyper:
 	}
 
 	match (req.method(), bits[1]) {
+		// respond with current API version
+
 		(&Method::GET, "version") => {
 			Ok(Response::new(Body::from(API_VERSION)))
 		}
+
+		// respond with information about a given user
 
 		(&Method::GET, "user_info") => {
 			if bits.len() != 3 {
@@ -47,6 +51,8 @@ async fn respond(req: Request<Body>, db: Value) -> Result<Response<Body>, hyper:
 			Ok(Response::new(Body::from(users[&user].to_string())))
 		}
 
+		// respond with a sorted list of users, following a given key
+
 		(&Method::GET, "sort") => {
 			if bits.len() != 3 {
 				return Ok(not_found(format!("expected 2 args (got {})", bits.len() - 1)));
@@ -56,26 +62,20 @@ async fn respond(req: Request<Body>, db: Value) -> Result<Response<Body>, hyper:
 			println!("Requesting sorted list of users by '{}'", field);
 
 			let users: HashMap<String, Value> = serde_json::from_value(db["users"].clone()).unwrap();
-			let mut user_list: Vec<_> = users.iter().collect();
 
-			user_list.sort_by(|a, b| {
-				let i: u64 = a.1[&field].as_u64().unwrap();
-				let j: u64 = b.1[&field].as_u64().unwrap();
-
-				j.partial_cmp(&i).unwrap()
-			});
-
-			let mut response: Vec<(String, u64)> = vec![];
-
-			for user in user_list {
+			let mut user_list: Vec<(String, usize)> = users.iter().map(|user| {
 				let name: String = user.0.as_str().into();
-				let i: u64 = user.1[&field].as_u64().unwrap();
+				let events: Vec<Value> = serde_json::from_value(user.1["events"].clone()).unwrap();
+				let i = events.iter().filter(|event| event["type"] == field).count();
 
-				response.push((name, i));
-			}
+				(name, i)
+			}).collect();
 
-			Ok(Response::new(Body::from(json!(response).to_string())))
+			user_list.sort_by(|x, y| y.1.partial_cmp(&x.1).unwrap());
+			Ok(Response::new(Body::from(json!(user_list.clone()).to_string())))
 		}
+
+		// respond with error message if the API endpoint doesn't exist
 
 		_ => {
 			Ok(not_found(format!("unknown API endpoint: {}", bits[1])))
