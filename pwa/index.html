@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 	<head>
+		<meta charset="UTF-8"> <!-- must be in the first 1024 bytes of the document -->
+		<meta name="description" content="App for instructors at the sailing school De Bird"> <!-- can't be longer than 275 characters as per Google's 2017 limit on the SERP -->
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="robots" content="index,follow">
+		<meta name="theme-color" content="#000000">
+
+		<link rel="icon" type="image/png" href="icon.png" />
+		<link rel="manifest" href="manifest.json" />
+
+		<!-- Apple PWA stuff -->
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="De Bird">
+
+		<!-- TODO keywords, google-site-verification, apple-touch-startup-image -->
+
 		<title>De Bird</title>
 	</head>
 
 	<body>
-		This should be some generic loading page, waiting for us to be redirected somewhere else depending on a few factors.
+		This should be some generic loading page, waiting for us to be redirected somewhere else or hydrated depending on a few factors.
 	</body>
 </html>
