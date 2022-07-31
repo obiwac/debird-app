@@ -1,7 +1,7 @@
 {
 	"name": "De Bird",
 	"lang": "en",
-	"start_url": "/",
+	"start_url": "/debird-app",
 	"scope": "/",
 	"display": "minimal-ui",
 	"orientation": "portrait",
