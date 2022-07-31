@@ -3,7 +3,7 @@
 	"lang": "en",
 	"start_url": "https://obiwac.github.io/debird-app",
 	"scope": "https://obiwac.github.io/debird-app",
-	"display": "minimal-ui",
+	"display": "standalone",
 	"orientation": "portrait",
 	"theme_color": "#000000",
 	"background_color": "#000000",
