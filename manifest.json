@@ -2,7 +2,7 @@
 	"name": "De Bird",
 	"lang": "en",
 	"start_url": "/debird-app",
-	"scope": "/",
+	"scope": "/debird-app",
 	"display": "minimal-ui",
 	"orientation": "portrait",
 	"theme_color": "#000000",
