@@ -29,6 +29,11 @@ async fn respond(req: Request<Body>, db: Value) -> Result<Response<Body>, hyper:
 		// respond with current API version
 
 		(&Method::GET, "version") => {
+			if bits.len() != 2 {
+				return Ok(not_found(format!("expected 1 arg (got {})", bits.len() - 2)));
+			}
+
+			println!("Requesting API version information");
 			Ok(Response::new(Body::from(API_VERSION)))
 		}
 
@@ -73,6 +78,22 @@ async fn respond(req: Request<Body>, db: Value) -> Result<Response<Body>, hyper:
 
 			user_list.sort_by(|x, y| y.1.partial_cmp(&x.1).unwrap());
 			Ok(Response::new(Body::from(json!(user_list.clone()).to_string())))
+		}
+
+		// create user account
+
+		(&Method::POST, "create_account") => {
+			if bits.len() != 2 {
+				return Ok(not_found(format!("expected 1 arg (got {})", bits.len() - 1)))
+			}
+
+			let raw = hyper::body::to_bytes(req.into_body()).await
+				.expect("should receive POST body");
+
+			let data: Value = serde_json::from_str(String::from_utf8(raw.to_vec()).unwrap().as_str())
+				.expect("data should be JSON");
+
+			Ok(not_found("test".into()))
 		}
 
 		// respond with error message if the API endpoint doesn't exist
